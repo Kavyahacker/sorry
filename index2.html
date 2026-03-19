@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    text-align: center;
+    overflow-x: hidden;
+}
+
+/* Sections */
+.section { display: none; padding: 40px; }
+.active { display: block; }
+
+/* Button */
+button {
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
+    background: #ff4d6d;
+    color: white;
+    cursor: pointer;
+}
+
+/* Teddy */
+.teddy { font-size: 90px; }
+
+/* Typing text */
+.typing {
+    border-right: 2px solid black;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Balloon */
+.balloon {
+    font-size: 60px;
+    animation: float 3s infinite;
+}
+@keyframes float {
+    50% { transform: translateY(-20px); }
+}
+
+/* Envelope */
+.envelope {
+    width: 220px;
+    height: 140px;
+    background: #fff;
+    margin: 20px auto;
+    position: relative;
+    cursor: pointer;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.flap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #ff4d6d;
+    clip-path: polygon(0 0, 100% 0, 50% 60%);
+    transition: 0.5s;
+}
+
+.open .flap {
+    transform: rotateX(180deg);
+}
+
+/* Letter */
+.letter {
+    display: none;
+    margin-top: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Rose */
+.rose {
+    font-size: 50px;
+    animation: bloom 2s infinite alternate;
+}
+@keyframes bloom {
+    from { transform: scale(0.8); }
+    to { transform: scale(1.2); }
+}
+
+/* Photo */
+.photo {
+    width: 200px;
+    border-radius: 15px;
+    display: none;
+    margin-top: 20px;
+}
+
+/* No button runaway */
+#noBtn {
+    position: absolute;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="section active" id="p1">
+    <div class="teddy">🧸</div>
+    <h2 id="typingText"></h2>
+    <br><br>
+    <button onclick="next(2)">Okayy ❤️</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="section" id="p2">
+    <div class="balloon">🎈</div>
+    <h2>Thank you for opening 🥺</h2>
+    <button onclick="next(3)">Continue 💕</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="section" id="p3">
+    <div class="rose">🌹</div>
+    <h2>Open these 💌</h2>
+
+    <!-- Envelope 1 -->
+    <div class="envelope" onclick="openEnv(this, 'l1')">
+        <div class="flap"></div>
+    </div>
+
+    <div class="letter" id="l1">
+        <p id="letterText"></p>
+    </div>
+
+    <!-- Envelope 2 -->
+    <div class="envelope" onclick="openEnv(this, 'l2')">
+        <div class="flap"></div>
+    </div>
+
+    <div class="letter" id="l2">
+        <p>
+        I promise ❤️<br><br>
+        Main kabhi aise words use nahi karunga 😔<br>
+        Mainein tumhe aisa khe diya i am so sorry for my mistake 💕<br>
+        idk meinei kese bol diyaa i will never ever do it again<br>
+        for me u are my world, my everything
+        Main better banunga tere liye ❤️
+        </p>
+
+        <h3>I love you ❤️ please mujhe maaf krdo 🥺</h3>
+
+        <button onclick="showFinal()">Forgive me? 💖</button>
+        <button id="noBtn" onmouseover="runAway()">No 😤</button>
+    </div>
+</div>
+
+<!-- FINAL -->
+<div class="section" id="p4">
+    <h2>You said YES 😭❤️</h2>
+    <p>Now this boy is all yours 💖</p>
+    <img src="WhatsApp Image 2026-03-19 at 20.14.30.jpeg" class="photo" id="photo">
+</div>
+
+<script>
+// Page switch
+function next(p) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById('p'+p).classList.add('active');
+}
+
+// Typing effect
+let text = "I am really sorry for my mistake... please open this 🥺";
+let i = 0;
+function type() {
+    if(i < text.length){
+        document.getElementById("typingText").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(type, 40);
+    }
+}
+type();
+
+// Envelope open
+function openEnv(el, id){
+    el.classList.add("open");
+    document.getElementById(id).style.display = "block";
+}
+
+// Letter typing
+let letter = "Mujhe pata hai maine jo 'chammiya' bola wo galat tha... mujhe nahi bolna chahiye tha... tu mere liye bohot important hai... please maaf kar de 🥺❤️";
+let j = 0;
+function typeLetter(){
+    if(j < letter.length){
+        document.getElementById("letterText").innerHTML += letter.charAt(j);
+        j++;
+        setTimeout(typeLetter, 30);
+    }
+}
+document.querySelectorAll('.envelope')[0].onclick = function(){
+    openEnv(this,'l1');
+    typeLetter();
+}
+
+// Runaway button
+function runAway(){
+    let btn = document.getElementById("noBtn");
+    btn.style.top = Math.random()*300 + "px";
+    btn.style.left = Math.random()*300 + "px";
+}
+
+// Final
+function showFinal(){
+    next(4);
+    document.getElementById("photo").style.display = "block";
+}
+</script>
+
+</body>
+</html>
